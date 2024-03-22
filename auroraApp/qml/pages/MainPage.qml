@@ -26,26 +26,26 @@ import Sailfish.Silica 1.0
 Page {
     id: root
 
-    function fetchHelloWorld() {
+    function fetchData() {
 
-        // send query
-        shared.run(//"shared.my.company.name.ServiceRequestReact.getEvent.repos()",
-                   "shared.com.example.kmpblank.ServiceRequestReact.getEvent.getHelloWorld()",
+        shared.run("shared.com.example.kmpblank.ServiceRequestReact.getEvent.getHelloWorld()",
                    function (response) {
                        console.log(response)
                        helloText.text = response.toString()
                    }, function (error) {
                        console.log("error with message " + error)
                    })
-    }
-
-    function fetchDelayedHelloWorld() {
-
-        // send query
         shared.run("shared.com.example.kmpblank.ServiceRequestReact.getEvent.getDelayedHelloWorld()",
                    function (response) {
                        console.log(response)
                        delayedHelloText.text = response.toString()
+                   }, function (error) {
+                       console.log("error with message " + error)
+                   })
+        shared.run("shared.com.example.kmpblank.ServiceRequestReact.getEvent.getTimer()",
+                   function (response) {
+                       console.log(response)
+                       timerText.text = "События флоу: " + response.toString()
                    }, function (error) {
                        console.log("error with message " + error)
                    })
@@ -73,10 +73,17 @@ Page {
             horizontalAlignment: Qt.AlignCenter
             font.pixelSize: Theme.fontSizeLarge
         }
+        Text {
+            id: timerText
+            wrapMode: Text.WordWrap
+            color: Theme.primaryColor
+            textFormat: Text.StyledText
+            horizontalAlignment: Qt.AlignCenter
+            font.pixelSize: Theme.fontSizeLarge
+        }
     }
 
     Component.onCompleted: {
-        root.fetchHelloWorld()
-        root.fetchDelayedHelloWorld()
+        root.fetchData()
     }
 }

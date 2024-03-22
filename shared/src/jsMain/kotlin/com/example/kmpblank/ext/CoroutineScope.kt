@@ -5,6 +5,10 @@ import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.asPromise
 import kotlinx.coroutines.async
 import com.example.kmpblank.Uuid
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
@@ -25,5 +29,22 @@ fun <T : Any> CoroutineScope.promiseWithEvent(
     } else {
         async(context, start, block).asPromise()
     }
+}
+
+fun <T : Any> CoroutineScope.flowWithEvent(
+    flow: Flow<T>,
+): Any {
+
+        val caller = Uuid.v4()
+        flow
+            .catch {
+                sendEventError(caller = caller, error = it.message ?: "Error query")
+            }
+            .onEach {
+                sendEventResponse(caller = caller, response = it)
+            }
+            .launchIn(this)
+
+        return caller
 }
 

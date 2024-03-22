@@ -1,9 +1,11 @@
 package com.example.kmpblank
 
+import com.example.kmpblank.ext.flowWithEvent
 import com.example.kmpblank.ext.promiseWithEvent
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.flow
 
 /**
  * JS service network
@@ -24,11 +26,18 @@ class GetRequestJS(
 ) {
     @OptIn(DelicateCoroutinesApi::class)
     fun getHelloWorld() = GlobalScope.promiseWithEvent(isEvent) {
-        "Hello world"
+        "Привет, Аврора"
     }
 
     fun getDelayedHelloWorld()  = GlobalScope.promiseWithEvent(isEvent) {
         delay(5_000)
-        "Delayed hello world"
+        "Отложенное сообщение"
     }
+
+    fun getTimer() = GlobalScope.flowWithEvent(flow<Int>{
+        for (i in 0 until 1_000_000){
+            delay(1000)
+            emit(i)
+        }
+    })
 }
