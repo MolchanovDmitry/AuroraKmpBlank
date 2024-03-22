@@ -4,4 +4,6 @@
 * ./gradlew jsBuildForAurora
 * открыть *.pro файл через Аврора IDE.
 
-![](https://github.com/MolchanovDmitry/AuroraKmpBlank/blob/master/img/showcase.gif)
+<div align="center">
+    ![](https://github.com/MolchanovDmitry/AuroraKmpBlank/blob/master/img/showcase.gif)
+</div>
