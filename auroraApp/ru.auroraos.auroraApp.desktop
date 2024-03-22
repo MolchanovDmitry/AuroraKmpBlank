@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+X-Nemo-Application-Type=silica-qt5
+Icon=ru.auroraos.auroraApp
+Exec=/usr/bin/ru.auroraos.auroraApp
+Name=KmpBlank
+Name[ru]=KmpBlank
+
+[X-Application]
+Permissions=WebView
+OrganizationName=ru.auroraos
+ApplicationName=auroraApp
+ExecDBus=/usr/bin/ru.auroraos.auroraApp
