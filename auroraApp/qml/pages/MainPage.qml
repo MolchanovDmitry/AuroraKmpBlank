@@ -26,11 +26,11 @@ import Sailfish.Silica 1.0
 Page {
     id: root
 
-    function getData() {
+    function fetchHelloWorld() {
 
         // send query
         shared.run(//"shared.my.company.name.ServiceRequestReact.getEvent.repos()",
-                   "shared.com.example.kmpblank.ServiceRequestReact.getEvent.repos()",
+                   "shared.com.example.kmpblank.ServiceRequestReact.getEvent.getHelloWorld()",
                    function (response) {
                        console.log(response)
                        helloText.text = response.toString()
@@ -39,20 +39,44 @@ Page {
                    })
     }
 
+    function fetchDelayedHelloWorld() {
+
+        // send query
+        shared.run("shared.com.example.kmpblank.ServiceRequestReact.getEvent.getDelayedHelloWorld()",
+                   function (response) {
+                       console.log(response)
+                       delayedHelloText.text = response.toString()
+                   }, function (error) {
+                       console.log("error with message " + error)
+                   })
+    }
+
     allowedOrientations: Orientation.All
 
-    Text {
-        id: helloText
+    Column {
         anchors.centerIn: parent
-        width: parent.width - Theme.paddingLarge * 2
-        wrapMode: Text.WordWrap
-        color: Theme.primaryColor
-        textFormat: Text.StyledText
-        horizontalAlignment: Qt.AlignCenter
-        font.pixelSize: Theme.fontSizeLarge
+
+        Text {
+            id: helloText
+            wrapMode: Text.WordWrap
+            color: Theme.primaryColor
+            textFormat: Text.StyledText
+            horizontalAlignment: Qt.AlignCenter
+            font.pixelSize: Theme.fontSizeLarge
+        }
+
+        Text {
+            id: delayedHelloText
+            wrapMode: Text.WordWrap
+            color: Theme.primaryColor
+            textFormat: Text.StyledText
+            horizontalAlignment: Qt.AlignCenter
+            font.pixelSize: Theme.fontSizeLarge
+        }
     }
 
     Component.onCompleted: {
-        root.getData()
+        root.fetchHelloWorld()
+        root.fetchDelayedHelloWorld()
     }
 }
